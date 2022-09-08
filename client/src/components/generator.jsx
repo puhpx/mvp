@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 class Generator extends React.Component {
   constructor(props) {
@@ -15,20 +16,46 @@ class Generator extends React.Component {
     })
   }
 
-  search(props) {
-    this.props.onSearch(this.state.url)
+  create(props) {
+    this.props.createQR(this.state.url)
   }
+
+  saveqrcode () {
+    let user = prompt("Please enter your username:", "Guest");
+    if (user === null || user === '') {
+      alert('Invalid Username')
+    } else {
+      $.ajax({
+        type: "POST",
+        url: "/db",
+        data: JSON.stringify({
+          username: user,
+          qrcode: this.props.qrcode,
+        }),
+        success: console.log('saved to db through POST'),
+        error: (err) => {console.log(err)},
+        contentType: "application/json"
+      })
+      console.log('QR SAVED!!!!')
+    }
+  }
+
+
+
 
   render () {
     console.log(this.props)
     return (<div>
-      <h4>Input url to generate QR code</h4>
-      Enter your website: <input value={this.state.url} onChange={this.onChange.bind(this)}/>
-      <button onClick={this.search.bind(this)}> Submit
-      </button>
       <div>
-      <img src={`data:image/svg+xml;base64,${btoa(this.props.qrcode)}`} alt="" width="200" height="200" />
+        <h4>Create QR code</h4>
+        Enter your URL: <input value={this.state.url} onChange={this.onChange.bind(this)}/>
+        <button onClick={this.create.bind(this)}> Submit
+        </button>
       </div>
+      <div>
+        <img src={`data:image/svg+xml;base64,${btoa(this.props.qrcode)}`} alt="" width="200" height="200" />
+      </div>
+      <button onClick = {this.saveqrcode.bind(this)}> save this QR code </button>
     </div>)
   }
 }

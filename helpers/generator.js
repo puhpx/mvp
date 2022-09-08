@@ -7,8 +7,8 @@ let qrgenerator = (body) => {
     url: 'https://qrcode3.p.rapidapi.com/qrcode/text',
     headers: {
       'content-type': 'application/json',
-      'X-RapidAPI-Key': '5f4e887790msh40401373fc4de76p1e4a29jsn5c68278b230f',
-      'X-RapidAPI-Host': 'qrcode3.p.rapidapi.com'
+      'X-RapidAPI-Key': '9535db8c0bmsh66c22b0fb1289d8p149ac6jsnba6b462f656b',
+    'X-RapidAPI-Host': 'qrcode3.p.rapidapi.com'
     },
     data: JSON.stringify(body)
   };
